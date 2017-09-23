@@ -132,7 +132,8 @@ let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
 " Tell vim-plug we finished declaring plugins, so it can load them
 "
-
+Plug 'majutsushi/tagbar'
+Plug 'tpope/vim-fugitive'
 
 Plug 'tmhedberg/simpylfold'
 call plug#end()
