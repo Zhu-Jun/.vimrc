@@ -1,0 +1,16 @@
+set ignorecase
+set smartcase
+set relativenumber
+set hlsearch
+let mapleader=","
+nmap G Gzz
+nmap n nzz
+nmap j jzz
+nmap k kzz
+nmap N Nzz
+nmap } }zz
+nmap { {zz
+vmap <C-c> "+y
+nmap <leader>h ^
+nmap <leader>l $
+nnoremap <leader>co :action CloseAllEditorsButActive<CR>
