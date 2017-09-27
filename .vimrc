@@ -132,8 +132,8 @@ let g:multi_cursor_skip_key='<C-x>'
 let g:multi_cursor_quit_key='<Esc>'
 " Tell vim-plug we finished declaring plugins, so it can load them
 "
-Plug 'majutsushi/tagbar'
-Plug 'tpope/vim-fugitive'
+"Plug 'easymotion/vim-easymotion'
+Plug 'myusuf3/numbers.vim'
 
 Plug 'tmhedberg/simpylfold'
 call plug#end()
@@ -451,3 +451,37 @@ let g:airline#extensions#whitespace#enabled = 0
 "let g:airline_symbols.branch = '⭠'
 "let g:airline_symbols.readonly = '⭤'
 "let g:airline_symbols.linenr = '⭡'
+"
+function! s:get_visual_selection()
+    " Why is this not a built-in Vim script function?!
+    let [line_start, column_start] = getpos("'<")[1:2]
+    let [line_end, column_end] = getpos("'>")[1:2]
+    let lines = getline(line_start, line_end)
+    if len(lines) == 0
+        return ''
+    endif
+    let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
+    let lines[0] = lines[0][column_start - 1:]
+    return join(lines, "\n")
+endfunction
+function! FormatXml(mode) range
+let a:i = ''
+if a:mode == 'v'
+    let a:i = s:get_visual_selection()
+endif
+python3 << EOF
+import vim
+if (vim.eval('a:i') == ''):
+    s = ""
+    for i in vim.current.buffer:
+        s += i
+    print(s)
+else:
+    print(vim.eval('a:i'))
+EOF
+endfunction
+
+nmap ,px :call FormatXml('n') <CR>
+vmap ,px :call FormatXml('v') <CR>
+
+
