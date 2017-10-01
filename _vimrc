@@ -7,11 +7,7 @@ set guifont=Consolas:h12
 au GUIEnter * simalt ~x
 set autoindent
 set fileencodings=utf-8,chinese,latin-1
-if has("win32")
-    set fileencoding=chinese
-else
-    set fileencoding=utf-8
-endif
+set fileencoding=utf-8
 vmap <C-c> "+y
 set nocompatible
 filetype off
@@ -21,9 +17,10 @@ let mapleader=","
 set rtp+=$HOME/vimfiles/bundle/Vundle.vim/
 call vundle#begin('$HOME/vimfiles/bundle/')
 map <leader>pj :%!python -m json.tool<CR>
-map <leader>px :0%!xmllint % --format<CR>
+"map <leader>px :0%!xmllint % --format<CR>
 nmap <leader>h ^
 nmap <leader>l $
+autocmd BufEnter * silent! lcd %:p:h
 
 " Override configs by directory 
 "Plugin 'arielrossanigo/dir-configs-override.vim'
@@ -32,7 +29,7 @@ Plugin 'VundleVim/Vundle.vim'
 Plugin 'scrooloose/nerdtree'
 "" Code commenter
 Plugin 'scrooloose/nerdcommenter'
-"" Class/module browser “¿¿µcTag£¨∂¯«“ «œ‘ æŒƒµµΩ·ππ£¨≤ª≥£”√
+"" Class/module browser ‰æùËµñcTagÔºåËÄå‰∏îÊòØÊòæÁ§∫ÊñáÊ°£ÁªìÊûÑÔºå‰∏çÂ∏∏Áî®
 "Plugin 'majutsushi/tagbar'
 " Code and files fuzzy finder
 Plugin 'ctrlpvim/ctrlp.vim'
@@ -56,6 +53,8 @@ Plugin 'davidhalter/jedi-vim'
 "http://blog.csdn.net/dark_tone/article/details/52926394
 "comparation between youcompleteme and neocomplete
 Plugin 'Shougo/neocomplete.vim'
+Plugin 'Shougo/neosnippet'
+Plugin 'Shougo/neosnippet-snippets'
 " Snippets manager (SnipMate), dependencies, and snippets repo
 Plugin 'MarcWeber/vim-addon-mw-utils'
 Plugin 'tomtom/tlib_vim'
@@ -95,7 +94,7 @@ Plugin 'serpent7776/vim-logcat'
 "
 "Plugin 'Valloric/YouCompleteMe'
 "
-" ∂‡π‚±Í—°÷–±‡º≠
+" Â§öÂÖâÊ†áÈÄâ‰∏≠ÁºñËæë
 " " multiplecursors
 Plugin 'terryma/vim-multiple-cursors'
 let g:multi_cursor_use_default_mapping=0
@@ -122,8 +121,10 @@ endfunction
 
 Plugin 'tmhedberg/simpylfold'
 Plugin 'altercation/vim-colors-solarized'
-call vundle#end()
 Plugin 'yegappan/mru'
+Plugin 'tsaleh/vim-align'
+Plugin 'python-mode/python-mode'
+call vundle#end()
 filetype plugin on
 filetype indent on
 
@@ -162,8 +163,8 @@ set incsearch
 set hlsearch
 set ignorecase
 set smartcase
-" syntax highlight on
-"syntax on
+"syntax highlight on
+syntax on
 
 " show line numbers
 set nu
@@ -231,7 +232,10 @@ endif
 if !isdirectory(&undodir)
     call mkdir(&undodir, "p")
 endif
-
+""######################python mode############################################
+"call pathogen#infect()
+"call pathogen#helptags()
+""#############################################################################
 " ============================================================================
 " Plugins settings and mappings
 " Edit them as you wish.
@@ -354,8 +358,9 @@ let g:choosewin_overlay_enable = 1
 " Airline ------------------------------
 
 let g:airline_powerline_fonts = 0
-let g:airline_theme = 'bubblegum'
+let g:airline_theme = 'molokai'
 let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#tabline#enabled = 1
 
 " to use fancy symbols for airline, uncomment the following lines and use a
 " patched font (more info on the README.rst)
@@ -369,3 +374,68 @@ let g:airline#extensions#whitespace#enabled = 0
 "let g:airline_symbols.branch = '?'
 "let g:airline_symbols.readonly = '?'
 "let g:airline_symbols.linenr = '?'
+function! HelloWorld()
+pyfile helloworld.py
+endfunction
+
+function! s:get_visual_selection()
+    " Why is this not a built-in Vim script function?!
+    let [line_start, column_start] = getpos("'<")[1:2]
+    let [line_end, column_end] = getpos("'>")[1:2]
+    let lines = getline(line_start, line_end)
+    if len(lines) == 0
+        return ''
+    endif
+    let lines[-1] = lines[-1][: column_end - (&selection == 'inclusive' ? 1 : 2)]
+    let lines[0] = lines[0][column_start - 1:]
+    return join(lines, "\n")
+endfunction
+function! FormatXml(mode) range
+"let a:i = ''
+"if a:mode == 'v'
+    "let a:i = s:get_visual_selection()
+"endif
+python << EOF
+import vim
+"if (vim.eval('a:i') == ''):
+    "s = ""
+for i in vim.current.buffer:
+    s += i
+d = {}
+for a in s.split(";")
+    aa = a.split(":")
+    d.p
+EOF
+endfunction
+
+nmap ,px :call FormatXml('n') <CR>
+vmap ,px :call FormatXml('v') <CR>
+
+autocmd BufRead *.py set makeprg=python\ -c\ \"import\ py_compile,sys;\ sys.stderr=sys.stdout;\ py_compile.compile(r'%')\"  
+autocmd BufRead *.py set efm=%C\ %.%#,%A\ \ File\ \"%f\"\\,\ line\ %l%.%#,%Z%[%^\ ]%\\@=%m  
+autocmd BufRead *.py nmap <F5> :!python3 %<CR>  
+autocmd BufRead *.py nmap <F6> :make<CR>  
+
+
+"map <leader>px : call HelloWorld()<CR>
+""""""""""""""""""""
+"string format
+""""""""""""""""""""
+"$this_variable_style to $thisVariableStyle:
+"------>:%s#\%($\%(\k\+\)\)\@<=_\(\k\)#\u\1#g
+"" Convert each name_like_this to NameLikeThis in current line.
+"------>:s#\(\%(\<\l\+\)\%(_\)\@=\)\|_\(\l\)#\u\1\2#g
+" Convert each name_like_this to nameLikeThis in current line.
+"------>:s#_\(\l\)#\u\1#g
+"
+" " Test (first line is original; second and third are results from above).
+" " CONSTANT ab_cd_ef some words name_like_this and another_name = some_more
+" " CONSTANT AbCdEf some words NameLikeThis and AnotherName = SomeMore
+"  CONST" Convert each NAME_LIKE_THIS to NameLikeThis in the current line.
+" Convert each NameLikeThis to name_like_this in current line.
+"------>:s#\(\<\u\l\+\|\l\+\)\(\u\)#\l\1_\l\2#g
+"alternative: accept numbers in name.
+"------>:s#\C\(\<\u[a-z0-9]\+\|[a-z0-9]\+\)\(\u\)#\l\1_\l\2#g
+" Test (first line is original; second is result from above).
+" CONSTANT AbCdEf some words NameLikeThis and AnotherName = someMore
+" CONSTANT ab_cd_ef some words name_like_this and another_name = some_more:s#_*\(\u\)\(\u*\)#\1\L\2#gANT abCdEf some words nameLikeThis and anotherName = someMore
