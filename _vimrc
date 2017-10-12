@@ -1,7 +1,7 @@
 set langmenu=en_US
 let $LANG= 'en_US'
 set lines=999 columns=999   
-"let autosave=30
+let autosave=30
 set encoding=utf-8
 set guifont=Consolas:h12
 au GUIEnter * simalt ~x
@@ -9,6 +9,8 @@ set autoindent
 set fileencodings=utf-8,chinese,latin-1
 set fileencoding=utf-8
 vmap <C-c> "+y
+noremap <leader>p "+p
+noremap <leader>P "+P
 set nocompatible
 filetype off
 set ignorecase
@@ -20,6 +22,7 @@ map <leader>pj :%!python -m json.tool<CR>
 "map <leader>px :0%!xmllint % --format<CR>
 nmap <leader>h ^
 nmap <leader>l $
+nmap <leader>del :%g /^\s*$/d
 autocmd BufEnter * silent! lcd %:p:h
 
 " Override configs by directory 
@@ -124,6 +127,7 @@ Plugin 'altercation/vim-colors-solarized'
 Plugin 'yegappan/mru'
 Plugin 'tsaleh/vim-align'
 Plugin 'python-mode/python-mode'
+Plugin 'wikitopian/hardmode'
 call vundle#end()
 filetype plugin on
 filetype indent on
@@ -141,8 +145,6 @@ nnoremap <c-l> <c-w><c-l>
 nnoremap <c-h> <c-w><c-h>
 nmap G Gzz
 nmap n nzz
-nmap j jzz
-nmap k kzz
 nmap N Nzz
 nmap } }zz
 nmap { {zz
@@ -362,18 +364,6 @@ let g:airline_theme = 'molokai'
 let g:airline#extensions#whitespace#enabled = 0
 let g:airline#extensions#tabline#enabled = 1
 
-" to use fancy symbols for airline, uncomment the following lines and use a
-" patched font (more info on the README.rst)
-"if !exists('g:airline_symbols')
-"   let g:airline_symbols = {}
-"endif
-"let g:airline_left_sep = '?'
-"let g:airline_left_alt_sep = '?'
-"let g:airline_right_sep = '?'
-"let g:airline_right_alt_sep = '?'
-"let g:airline_symbols.branch = '?'
-"let g:airline_symbols.readonly = '?'
-"let g:airline_symbols.linenr = '?'
 function! HelloWorld()
 pyfile helloworld.py
 endfunction
