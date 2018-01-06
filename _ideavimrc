@@ -1,16 +1,54 @@
 set ignorecase
 set smartcase
+set number
 set relativenumber
 set hlsearch
 let mapleader=","
-nmap G Gzz
-nmap n nzz
-nmap j jzz
-nmap k kzz
-nmap N Nzz
-nmap } }zz
-nmap { {zz
+nnoremap  G Gzz
+nnoremap  n nzz
+nnoremap  N Nzz
+nnoremap  } }zz
+nnoremap  { {zz
 vmap <C-c> "+y
-nmap <leader>h ^
-nmap <leader>l $
+nnoremap <leader>p "+p
+nnoremap <leader>P "+P
+nnoremap <leader>h ^
+nnoremap <leader>l $
+nnoremap <a-h> gT
+nnoremap <a-l> gt
+nnoremap <c-l> <c-w>l
+nnoremap <c-j> <c-w>j
+nnoremap <c-h> <c-w>h
+nnoremap <c-k> <c-w>k
+"关闭其它编辑窗口
 nnoremap <leader>co :action CloseAllEditorsButActive<CR>
+"跳转到上次修改的地方，对应的idea快捷键是<ctrl><shift><backspace>
+nnoremap g; :action JumpToLastChange<CR>
+"打开历史项目列表
+nnoremap <leader>rj :action ManageRecentProjects<CR>
+"打开上次关闭的标签
+nnoremap <leader>gr :action ReopenClosedTab<CR>
+
+nnoremap <leader>rf :action RecentFiles<CR>
+"关闭项目
+nnoremap <leader>cp :action CloseProject<CR>
+"返回上次跳转
+nnoremap <c-o> :action Back<CR>
+"返回前一次跳转
+nnoremap <c-i> :action Forward<CR>
+nnoremap [c :action VcsShowPrevChangeMarker<CR>
+nnoremap ]c :action VcsShowNextChangeMarker<CR>
+"变量重命名 SHIFT-F6
+nnoremap <leader>rn :action RenameElement<CR>
+"关闭当前页面
+nnoremap <leader>q :action CloseContent<CR>
+nnoremap <leader>R :action RunClass<CR>
+nnoremap <leader>rr :action Run<CR>
+nnoremap <leader>D :action DebugClass<CR>
+nnoremap <leader>d :action Debug<CR>
+"由Activity前往layout或由layout前往activity, CTRL-ALT-HOME
+nnoremap <leader>gl :action GotoRelated<CR>
+"显示资源历史记录
+nnoremap <leader>sh :action Vcs.ShowTabbedFileHistory<CR>
+"跟版本控制的最新版本进行对比
+nnoremap <leader>cs :action Compare.LastVersion<CR>
