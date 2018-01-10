@@ -5,6 +5,11 @@
 " ============================================================================
 " Vim-plug initialization
 " Avoid modify this section, unless you are very sure of what you are doing
+inoremap jj <esc>
+let mapleader=","
+nmap <leader>h ^
+nmap <leader>l $
+autocmd BufEnter * silent! lcd %:p:h
 
 let vim_plug_just_installed = 0
 let vim_plug_path = expand('~/.vim/autoload/plug.vim')
@@ -71,7 +76,7 @@ Plug 'jeetsukumaran/vim-indentwise'
 " Python autocompletion, go to definition.
 Plug 'davidhalter/jedi-vim'
 " Better autocompletion
-Plug 'Shougo/neocomplcache.vim'
+Plug 'Shougo/neocomplete.vim'
 " Snippets manager (SnipMate), dependencies, and snippets repo
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
@@ -115,8 +120,6 @@ Plug 'vim-scripts/YankRing.vim'
 
 "Plug 'vim-scripts/vim-colors-solarized'
 
-Plug 'Valloric/YouCompleteMe'
-
 " Group dependencies, vim-snippets depends on ultisnips
 " " 代码片段快速插入 (snippets中,是代码片段资源,需要学习)
 " " Snippets are separated from the engine. Add this if you want them:
@@ -125,17 +128,38 @@ Plug 'SirVer/ultisnips'
 " " multiplecursors
 Plug 'terryma/vim-multiple-cursors'
 let g:multi_cursor_use_default_mapping=0
+let g:multi_cursor_exit_from_insert_mode=0
 " Default mapping
-let g:multi_cursor_next_key='<C-m>'
+let g:multi_cursor_next_key='<C-n>'
 let g:multi_cursor_prev_key='<C-p>'
 let g:multi_cursor_skip_key='<C-x>'
-let g:multi_cursor_quit_key='<Esc>'
+let g:multi_cursor_quit_key='<C-c>'
 " Tell vim-plug we finished declaring plugins, so it can load them
+
+function! Multiple_cursors_before()
+  if exists(':NeoCompleteLock')==2
+    exe 'NeoCompleteLock'
+  endif
+endfunction
+
+" Called once only when the multiple selection is canceled (default <Esc>)
+function! Multiple_cursors_after()
+  if exists(':NeoCompleteUnlock')==2
+    exe 'NeoCompleteUnlock'
+  endif
+endfunction
+
 "
 "Plug 'easymotion/vim-easymotion'
 Plug 'myusuf3/numbers.vim'
 
 Plug 'tmhedberg/simpylfold'
+
+Plug 'yegappan/mru'
+Plug 'tsaleh/vim-align'
+Plug 'python-mode/python-mode'
+Plug 'ianva/vim-youdao-translater'
+Plug 'wikitopian/hardmode'
 call plug#end()
 
 " ============================================================================
@@ -168,13 +192,25 @@ nnoremap <c-j> <c-w><c-j>
 nnoremap <c-k> <c-w><c-k>
 nnoremap <c-l> <c-w><c-l>
 nnoremap <c-h> <c-w><c-h>
-nmap G Gzz
-nmap n nzz
-nmap N Nzz
-nmap } }zz
-nmap { {zz
+nnoremap G Gzz
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap } }zz
+nnoremap { {zz
+inoremap <C-f> <Right>
+inoremap <C-b> <Left>
+inoremap <C-p> <Up>
+inoremap <C-n> <Down>
+inoremap <C-d> <Del>
+
 "no <down> ddp 
 "no <up> ddkP
+
+
+vnoremap <silent> <C-T> :<C-u>Ydv<CR>
+nnoremap <silent> <C-T> :<C-u>Ydc<CR>
+noremap <leader>yd :<C-u>Yde<CR>
+
 
 " tab length exceptions on some file types
 autocmd FileType html setlocal shiftwidth=4 tabstop=4 softtabstop=4
@@ -360,6 +396,7 @@ let g:syntastic_enable_signs = 0
 
 " All these mappings work only for python code:
 " Go to definition
+nmap <F5> :PymodeRun<CR>
 let g:jedi#goto_command = ',d'
 " Find ocurrences
 let g:jedi#usages_command = ',o'
@@ -368,26 +405,29 @@ let g:jedi#goto_assignments_command = ',a'
 " Go to definition in new tab
 nmap ,D :tab split<CR>:call jedi#goto()<CR>
 
-" NeoComplCache ------------------------------
+" neocomplete ------------------------------
 
 " most of them not documented because I'm not sure how they work
 " (docs aren't good, had to do a lot of trial and error to make 
 " it play nice)
-let g:neocomplcache_enable_at_startup = 1
-"let g:neocomplcache_enable_ignore_case = 1
-"let g:neocomplcache_enable_smart_case = 1
-let g:neocomplcache_enable_auto_select = 1
-let g:neocomplcache_enable_fuzzy_completion = 1
-let g:neocomplcache_enable_camel_case_completion = 1
-let g:neocomplcache_enable_underbar_completion = 1
-let g:neocomplcache_fuzzy_completion_start_length = 1
-let g:neocomplcache_auto_completion_start_length = 1
-let g:neocomplcache_manual_completion_start_length = 1
-let g:neocomplcache_min_keyword_length = 1
-let g:neocomplcache_min_syntax_length = 1
+let g:neocomplete_enable_at_startup = 1
+"let g:neocomplete_enable_ignore_case = 1
+"let g:neocomplete_enable_smart_case = 1
+let g:neocomplete_enable_auto_select = 1
+let g:neocomplete_enable_fuzzy_completion = 1
+let g:neocomplete_enable_camel_case_completion = 1
+let g:neocomplete_enable_underbar_completion = 1
+let g:neocomplete_fuzzy_completion_start_length = 1
+let g:neocomplete_auto_completion_start_length = 1
+let g:neocomplete_manual_completion_start_length = 1
+let g:neocomplete_min_keyword_length = 1
+let g:neocomplete_min_syntax_length = 1
 " complete with workds from any opened file
-let g:neocomplcache_same_filetype_lists = {}
-let g:neocomplcache_same_filetype_lists._ = '_'
+let g:neocomplete_same_filetype_lists = {}
+let g:neocomplete_same_filetype_lists._ = '_'
+
+inoremap <expr><C-g> neocomplete#undo_completion()
+inoremap <expr><C-l> neocomplete#complete_common_string()
 
 " TabMan ------------------------------
 
@@ -484,4 +524,9 @@ endfunction
 nmap ,px :call FormatXml('n') <CR>
 vmap ,px :call FormatXml('v') <CR>
 
+xnoremap @ :<C-u>call ExecuteMacroOverVisualRange()<CR>
 
+function! ExecuteMacroOverVisualRange()
+  echo "@".getcmdline()
+  execute ":'<,'>normal @".nr2char(getchar())
+endfunction
