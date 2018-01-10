@@ -2,6 +2,7 @@ set ignorecase
 set smartcase
 set number
 set relativenumber
+set incsearch
 set hlsearch
 let mapleader=","
 nnoremap  G Gzz
@@ -12,6 +13,8 @@ nnoremap  { {zz
 vmap <C-c> "+y
 nnoremap <leader>p "+p
 nnoremap <leader>P "+P
+vnoremap <leader>h ^
+vnoremap <leader>l $
 nnoremap <leader>h ^
 nnoremap <leader>l $
 nnoremap <a-h> gT
@@ -52,3 +55,15 @@ nnoremap <leader>gl :action GotoRelated<CR>
 nnoremap <leader>sh :action Vcs.ShowTabbedFileHistory<CR>
 "跟版本控制的最新版本进行对比
 nnoremap <leader>cs :action Compare.LastVersion<CR>
+"前往父类
+nnoremap <leader>sm :action GotoSuperMethod<CR>
+
+"insert模式下emacs键位绑定
+inoremap <C-f> <Right>
+inoremap <C-b> <Left>
+inoremap <C-p> <Up>
+inoremap <C-n> <Down>
+inoremap <C-d> <DEL>
+inoremap <C-e> <END>
+inoremap <C-a> <HOME>
+
