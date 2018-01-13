@@ -5,10 +5,34 @@
 " ============================================================================
 " Vim-plug initialization
 " Avoid modify this section, unless you are very sure of what you are doing
+"以最大化的方式打开
+if has("gui_running")
+"GUI is running or is about to start.
+"Maximize gvim window (for an alternative on Windows, see simalt below).
+    set lines=999 columns=999
+else
+    " This is console Vim.
+    if exists("+lines")
+       set lines=50
+    endif
+    if exists("+columns")
+        set columns=100
+    endif
+endif
+
+"隐藏菜单
+set guioptions-=m
+"隐藏工具类
+set guioptions-=T
+let $LANG= 'en_US'
+"字体与大小
+"set guifont=Source\ Code\ Pro:h10
 inoremap jj <esc>
 let mapleader=","
-nmap <leader>h ^
-nmap <leader>l $
+inoremap <leader>h ^
+nnoremap <leader>p "+p
+nnoremap <leader>l $
+nnoremap <leader>q :q<CR>
 autocmd BufEnter * silent! lcd %:p:h
 
 let vim_plug_just_installed = 0
@@ -118,7 +142,7 @@ Plug 'vim-scripts/Wombat'
 " Yank history navigation
 Plug 'vim-scripts/YankRing.vim'
 
-"Plug 'vim-scripts/vim-colors-solarized'
+Plug 'altercation/vim-colors-solarized'
 
 " Group dependencies, vim-snippets depends on ultisnips
 " " 代码片段快速插入 (snippets中,是代码片段资源,需要学习)
@@ -161,7 +185,6 @@ Plug 'python-mode/python-mode'
 Plug 'ianva/vim-youdao-translater'
 Plug 'wikitopian/hardmode'
 call plug#end()
-
 " ============================================================================
 " Install plugins the first time vim runs
 
