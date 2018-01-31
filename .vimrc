@@ -30,8 +30,10 @@ let $LANG= 'en_US'
 inoremap jj <esc>
 let mapleader=","
 inoremap <leader>h ^
+nnoremap <leader>h ^
 nnoremap <leader>p "+p
 nnoremap <leader>l $
+inoremap <leader>l $
 nnoremap <leader>q :q<CR>
 autocmd BufEnter * silent! lcd %:p:h
 
