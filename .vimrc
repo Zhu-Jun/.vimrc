@@ -2,6 +2,7 @@
 " http://fisadev.github.io/fisa-vim-config/
 " version: 8.3.1
 
+
 " ============================================================================
 " Vim-plug initialization
 " Avoid modify this section, unless you are very sure of what you are doing
@@ -20,20 +21,28 @@ else
     endif
 endif
 
+set encoding=utf-8
+set fileencodings=cp936,gb18030,ucs-bom,utf-8,big5,euc-jp,euc-kr,latin1
+set termencoding=utf-8
+language zh_CN.GB18030
+"字体与大小
+"set guifont=Source\ Code\ Pro:h10
+set gfw=Yahei_Mono:h10:cGB2312
 "隐藏菜单
 set guioptions-=m
 "隐藏工具类
 set guioptions-=T
 let $LANG= 'en_US'
-"字体与大小
-"set guifont=Source\ Code\ Pro:h10
 inoremap jj <esc>
 let mapleader=","
+
+vnoremap <leader>h ^
 inoremap <leader>h ^
 nnoremap <leader>h ^
 nnoremap <leader>p "+p
 nnoremap <leader>l $
 inoremap <leader>l $
+vnoremap <leader>l $
 nnoremap <leader>q :q<CR>
 autocmd BufEnter * silent! lcd %:p:h
 
@@ -102,7 +111,9 @@ Plug 'jeetsukumaran/vim-indentwise'
 " Python autocompletion, go to definition.
 Plug 'davidhalter/jedi-vim'
 " Better autocompletion
-Plug 'Shougo/neocomplete.vim'
+"Plug 'Shougo/neocomplete.vim'
+
+Plug 'Valloric/YouCompleteMe'
 " Snippets manager (SnipMate), dependencies, and snippets repo
 Plug 'MarcWeber/vim-addon-mw-utils'
 Plug 'tomtom/tlib_vim'
@@ -150,6 +161,7 @@ Plug 'altercation/vim-colors-solarized'
 " " 代码片段快速插入 (snippets中,是代码片段资源,需要学习)
 " " Snippets are separated from the engine. Add this if you want them:
 Plug 'SirVer/ultisnips'
+Plug 'vim-scripts/taglist.vim'
 " 多光标选中编辑
 " " multiplecursors
 Plug 'terryma/vim-multiple-cursors'
@@ -430,30 +442,6 @@ let g:jedi#goto_assignments_command = ',a'
 " Go to definition in new tab
 nmap ,D :tab split<CR>:call jedi#goto()<CR>
 
-" neocomplete ------------------------------
-
-" most of them not documented because I'm not sure how they work
-" (docs aren't good, had to do a lot of trial and error to make 
-" it play nice)
-let g:neocomplete_enable_at_startup = 1
-"let g:neocomplete_enable_ignore_case = 1
-"let g:neocomplete_enable_smart_case = 1
-let g:neocomplete_enable_auto_select = 1
-let g:neocomplete_enable_fuzzy_completion = 1
-let g:neocomplete_enable_camel_case_completion = 1
-let g:neocomplete_enable_underbar_completion = 1
-let g:neocomplete_fuzzy_completion_start_length = 1
-let g:neocomplete_auto_completion_start_length = 1
-let g:neocomplete_manual_completion_start_length = 1
-let g:neocomplete_min_keyword_length = 1
-let g:neocomplete_min_syntax_length = 1
-" complete with workds from any opened file
-let g:neocomplete_same_filetype_lists = {}
-let g:neocomplete_same_filetype_lists._ = '_'
-
-inoremap <expr><C-g> neocomplete#undo_completion()
-inoremap <expr><C-l> neocomplete#complete_common_string()
-
 " TabMan ------------------------------
 
 " mappings to toggle display, and to focus on it
@@ -555,3 +543,9 @@ function! ExecuteMacroOverVisualRange()
   echo "@".getcmdline()
   execute ":'<,'>normal @".nr2char(getchar())
 endfunction
+
+
+"taglist相关配置
+"set tags=tags
+noremap <F8> :TlistToggle<CR>
+let Tlist_Use_Right_Window =1
