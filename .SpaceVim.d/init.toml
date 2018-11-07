@@ -1,0 +1,78 @@
+#=============================================================================
+# dark_powered.toml --- dark powered configuration example for SpaceVim
+# Copyright (c) 2016-2017 Wang Shidong & Contributors
+# Author: Wang Shidong < wsdjeg at 163.com >
+# URL: https://spacevim.org
+# License: GPLv3
+#=============================================================================
+
+# All SpaceVim option below [option] section
+[options]
+    # set spacevim theme. by default colorscheme layer is not loaded,
+    # if you want to use more colorscheme, please load the colorscheme
+    # layer
+    colorscheme = "gruvbox"
+    colorscheme_bg = "dark"
+    # background = "light"
+    # Disable guicolors in basic mode, many terminal do not support 24bit
+    # true colors
+    enable_guicolors = true
+    # Disable statusline separator, if you want to use other value, please
+    # install nerd fonts
+    statusline_separator = "arrow"
+    statusline_inactive_separator = "arrow"
+    buffer_index_type = 4
+    statusline_unicode_symbols = false
+    enable_tabline_filetype_icon = false
+    enable_statusline_display_mode = false
+    bootstrap_before = "myspacevim#init"
+    bootstrap_after = "myspacevim#after"
+    custom_color_palette = [
+
+                ['#282828', '#a89984', 246, 235],
+                 ['#ffffff', '#262626', 231, 235],
+                 ['#ffffff', '#3a3a3a', 231, 237],
+                 ['#4e4e4e', 239],
+                 ['#ffffff', '#437019', 231, 22],
+                 ['#ffffff', '#870000', 231, 88],
+                 ['#870000', '#000000', 88, 0],
+                 ['#ffffff', '#689d6a', 231, 72],
+                 ['#ffffff', '#8f3f71', 231, 132],
+                 # ['#282C34', '#98C379', 114, 235],
+                 # ['#ABB2BF', '#3E4452', 236, 144],
+                 # ['#ABB2BF', '#3B4048', 238, 144],
+                 # ['#5C6370', 59],
+                 # ['#282c34', '#00af87', 235, 36],
+                 # ['#282c34', '#ff8700', 235, 208],
+                 # ['#282c34', '#af5f5f', 235, 131],
+    ]
+
+
+[[custom_plugins]]
+    name = "yanqd0/android-log.vim"
+    merged = 0
+
+# Enable autocomplete layer
+[[layers]]
+name = 'autocomplete'
+auto-completion-return-key-behavior = "complete"
+auto-completion-tab-key-behavior = "smart"
+
+[[layers]]
+name = 'colorscheme'
+
+[[layers]]
+name = 'core#statusline'
+
+
+[[layers]]
+name = 'tmux'
+
+[[layers]]
+name = "format"
+
+[[layers]]
+name = "lang#python"
+
+[[layers]]
+name = "ctrlp"
