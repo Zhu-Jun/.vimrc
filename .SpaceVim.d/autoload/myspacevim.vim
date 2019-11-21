@@ -12,8 +12,12 @@ function! myspacevim#init() abort
   let g:spacevim_enable_language_specific_leader=0
   let g:spacevim_filemanager             = 'nerdtree'
 
-  nnoremap <leader>nerd :NERDTree C:\Users\Zhu Jun\<CR>
-  nnoremap <leader>conf :e C:/Users/Zhu\ Jun/.SpaceVim.d/autoload/myspacevim.vim<CR>
+  set fileencodings=utf-8,ucs-bom,gb18030,gbk,gb2312,cp936
+  set termencoding=utf-8
+  set encoding=utf-8
+
+  nnoremap <leader>nerd :NERDTree C:\Users\zhujun\<CR>
+  nnoremap <leader>conf :e C:/Users/zhujun/.SpaceVim.d/autoload/myspacevim.vim<CR>
   vnoremap <leader>h ^
   inoremap <leader>h <ESC>^i
   nnoremap <leader>h ^
@@ -22,10 +26,12 @@ function! myspacevim#init() abort
   nnoremap <leader>noh :noh<CR>
   nnoremap <leader>an :set ft=android_log<CR>
   nnoremap <leader>map ggVG=
+  nnoremap <leader>s :w <CR>
+  nnoremap Y y$
   inoremap <leader>l <END>
   inoremap <c-a> <ESC>^i
   vnoremap <leader>l $
-  " nnoremap <leader>q :q<CR>
+  nnoremap <leader>qq :q<CR>
 
   nnoremap <c-j> <c-w><c-j>
   nnoremap <c-k> <c-w><c-k>
@@ -148,6 +154,7 @@ function! myspacevim#after() abort
   nnoremap <leader>b :CtrlPBuffer<CR>
   nnoremap <leader><leader>l <Plug>(easymotion-overwin-line)
   let g:NERDTreeWinPos='left'
+  let g:tagbar_left = 0
 
   autocmd VimEnter * unmap <c-e>
   autocmd BufRead *.log set ft=android_log
@@ -155,10 +162,10 @@ function! myspacevim#after() abort
   set ignorecase
   
   inoremap <C-e> <END>
-  augroup fmt
-    autocmd!
-    autocmd BufWritePre * undojoin | Neoformat
-    autocmd BufRead,BufWritePre *.py  undojoin | Neoformat! python yapf
-  augroup END
+  " augroup fmt
+    " autocmd!
+    " autocmd BufWritePre * undojoin | Neoformat
+    " autocmd BufRead,BufWritePre *.py  undojoin | Neoformat! python yapf
+  " augroup END
 endfunction
 " nnoremap <leader>nf :NERDTreeFind<cr>

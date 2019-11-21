@@ -13,7 +13,7 @@
     # layer
     colorscheme = "gruvbox"
     colorscheme_bg = "dark"
-    # background = "light"
+    background = "light"
     # Disable guicolors in basic mode, many terminal do not support 24bit
     # true colors
     enable_guicolors = true
@@ -62,17 +62,17 @@ auto-completion-tab-key-behavior = "smart"
 name = 'colorscheme'
 
 [[layers]]
-name = 'core#statusline'
-
-
-[[layers]]
-name = 'tmux'
+  name = 'core#statusline'
 
 [[layers]]
-name = "format"
+name = 'chinese'
+
+[[layers]]
+name = "tools"
 
 [[layers]]
 name = "lang#python"
+format-on-save = 0
 
 [[layers]]
 name = "ctrlp"
