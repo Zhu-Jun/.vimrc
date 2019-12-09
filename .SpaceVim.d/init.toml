@@ -16,15 +16,17 @@
     background = "light"
     # Disable guicolors in basic mode, many terminal do not support 24bit
     # true colors
-    enable_guicolors = true
+    enable_guicolors = false
     # Disable statusline separator, if you want to use other value, please
     # install nerd fonts
     statusline_separator = "arrow"
     statusline_inactive_separator = "arrow"
     buffer_index_type = 4
+    window_index_type = 3
     statusline_unicode_symbols = false
     enable_tabline_filetype_icon = false
     enable_statusline_display_mode = false
+    automatic_update = 0
     bootstrap_before = "myspacevim#init"
     bootstrap_after = "myspacevim#after"
     custom_color_palette = [
@@ -52,6 +54,10 @@
     name = "yanqd0/android-log.vim"
     merged = 0
 
+[[custom_plugins]]
+    name = "justinmk/vim-sneak"
+    merged = 0
+
 # Enable autocomplete layer
 [[layers]]
 name = 'autocomplete'
@@ -62,7 +68,7 @@ auto-completion-tab-key-behavior = "smart"
 name = 'colorscheme'
 
 [[layers]]
-  name = 'core#statusline'
+name = 'core#statusline'
 
 [[layers]]
 name = 'chinese'
@@ -73,6 +79,9 @@ name = "tools"
 [[layers]]
 name = "lang#python"
 format-on-save = 0
+
+[[layers]]
+name = "ui"
 
 [[layers]]
 name = "ctrlp"

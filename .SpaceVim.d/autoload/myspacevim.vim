@@ -113,17 +113,17 @@ function! myspacevim#init() abort
   let g:ctrlp_working_path_mode = 0
   " ignore these files and folders on file finder
   "let g:ctrlp_custom_ignore = {
-  :syn region logTime start=+^\d\{2}-\d\{2} \d\{2}:\d\{2}:\d\{2}\.\d\{3}+ end=+ +me=e-1
-  :syn region logError start=+E/+ end=+ +me=e-1
-  :syn region logWarn start=+WARN+ end=+ +me=e-1
-  :syn region logInfo start=+INFO+ end=+ +me=e-1
-  :syn region logDebug start=+DEBUG+ end=+ +me=e-1
+  "":syn region logTime start=+^\d\{2}-\d\{2} \d\{2}:\d\{2}:\d\{2}\.\d\{3}+ end=+ +me=e-1
+  "":syn region logError start=+E/+ end=+ +me=e-1
+  "":syn region logWarn start=+W/+ end=+ +me=e-1
+  "":syn region logInfo start=+I/+ end=+ +me=e-1
+  "":syn region logDebug start=+D/+ end=+ +me=e-1
 
-  hi def logError ctermfg=white ctermbg=red
-  hi def logWarn ctermfg=yellow
-  hi def logInfo ctermfg=green
-  hi def logDebug ctermfg=blue
-  hi def logTime ctermfg=white ctermbg=blue
+  ""hi def logError ctermfg=red
+  ""hi def logWarn ctermfg=yellow
+  ""hi def logInfo ctermfg=green
+  ""hi def logDebug ctermfg=blue
+  ""hi def logTime ctermfg=white ctermbg=blue
   noremap <leader>del :%g /^\s*$/d<CR>
   autocmd BufEnter * lcd %:p:h
 
