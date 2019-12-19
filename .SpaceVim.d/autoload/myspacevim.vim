@@ -1,6 +1,7 @@
 
 function! myspacevim#init() abort
   let g:mapleader=","
+  au GUIEnter * simalt ~x
   " let g:spacevim_localleader = ","
   " 默认python3.0
   let g:jedi#force_py_version=3
